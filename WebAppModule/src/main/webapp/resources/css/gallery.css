@@ -1,0 +1,137 @@
+/*https://s-media-cache-ak0.pinimg.com/564x/3f/f5/bd/3ff5bd37f9ea0954d66c5b6b0e0ce829.jpg*/
+/*http://www.gettyimages.in/gi-resources/images/Homepage/Hero/US/SEP2016/prestige-476863311.jpg*/
+
+/*http://2.bp.blogspot.com/-CmBgofK7QzU/TVj3u3N1h2I/AAAAAAAADN8/OszBhGvvXRU/s640/tumblr_lg7h9gpbtP1qap9qio1_500.jpeg*/
+/*http://img.ffffound.com/static-data/assets/6/51cc46900bf5fe574293d49c4d9939e0ebfc8ee3_m.jpg*/
+/*http://www.newcastlewildflower.com.au/wp-content/uploads/2013/05/9fkUCY02te7bqobeZzdT9SEio1_500.jpg*/
+/*https://c2.staticflickr.com/4/3159/2616787671_9e2a8bf283.jpg*/
+
+/*http://img0.liveinternet.ru/images/attach/c/10/110/368/110368788_tumblr_mgzh5sd6c21r4zr2vo2_r1_500.gif*/
+/*http://s.spynet.ru/tru/pics5/20130401/gifs_12.gif*/
+/*http://img1.liveinternet.ru/images/attach/c/9/107/935/107935595_b1ec89c3b518c53297cf32eed94a6397.gif*/
+
+.gallery-tab {
+    overflow-y: auto;
+}
+
+.thumb-row {
+    display: flex;
+    flex-direction: row;
+    height: 200px;
+}
+
+.thumb-part {
+    width: 198px;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.thumb-part img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 100%;
+    width: auto;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.thumb-part img.portrait {
+    width: 100%;
+    height: auto;
+}
+
+.gallery-tab::-webkit-scrollbar {
+    width: 4px;
+}
+
+.gallery-tab::-webkit-scrollbar-thumb {
+    visibility: hidden;
+    border-radius: 3px;
+    background-color: rgba(230, 197, 0, .7);
+}
+
+.gallery-tab:hover::-webkit-scrollbar-thumb {
+    visibility: visible;
+}
+
+.new-thumb {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, .1);
+}
+
+
+
+.modal-thumb {
+    /*display: none; !* Hidden by default *!*/
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    padding-top: 50px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+}
+
+.modal-content {
+    padding: 20px;
+    margin: auto;
+    max-width: 900px;
+    max-height: 450px;
+    display: flex;
+    justify-content: center;
+}
+
+.delete-image {
+    width: 47px;
+    height: 17px;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    color: #E6C500;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.img-wrap {
+    display: flex;
+    width: 700px;
+    height: 400px;
+    position: relative;
+    background: #1e1e1e;
+}
+
+.img-wrap img {
+    min-width: 200px;
+    min-height: 200px;
+    box-shadow: 0 0 10px 5px rgba(170, 170, 170, .5);
+    max-height: 100%;
+    max-width: 100%;
+    margin: auto;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}

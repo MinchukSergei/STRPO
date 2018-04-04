@@ -1,0 +1,41 @@
+<div class="event-block">
+    <img class="big-style" ng-src="{{applicationContext}}/resources/images/assets/style-line.png">
+    <div class="event-icons">
+        <img ng-src="{{applicationContext + '/resources/images/assets/pencil-gray.png'}}">
+        <img ng-src="{{applicationContext + '/resources/images/assets/calendar-gray.png'}}">
+    </div>
+    <div class="event-data">
+        <div class="event-name">
+            <div class="event-name-input" ng-hide="isOwnEvent">{{eventData.eventName}}</div>
+            <input class="event-name-input" ng-show="isOwnEvent" ng-model="eventData.eventName" maxlength="30">
+        </div>
+        <div class="event-datetime">
+            <input class="timepicker" type="time" ng-model="eventData.eventTimestamp" ng-change="checkTimeInput()" ng-readonly="!isOwnEvent">
+        </div>
+    </div>
+
+    <div class="event-info">
+        <div class="event-is-public" ng-show="isOwnEvent" title="{{public ? 'Public' : 'Private'}}" ng-click="switchEventAccessibility()">
+            <img ng-src="{{applicationContext + '/resources/images/event/accessibility/' + (public ? 'public' : 'private') + '.png'}}">
+        </div>
+        <div class="event-owner-img" title="{{eventData.userOwner.userFirstName + ' ' + eventData.userOwner.userLastName}}">
+            <img ng-src="{{eventData.userOwner.userIcon.imageName | imagePrefix}}">
+        </div>
+        <div class="event-type" ng-click="switchEventTypes()" click-out="hideEventType()">
+            <img class="selected-type" ng-src="{{eventData.eventType.typeName | typeIconPath}}" title="{{eventData.eventType.typeName}}">
+            <div class="select-type" ng-show="isTypeSelected && isOwnEvent">
+                <div class="event-type-option" ng-repeat="eventType in eventTypes" title="{{eventType}}">
+                    <img ng-src="{{eventType | typeIconPath}}" ng-click="setSelectedType(eventType)">
+                </div>
+            </div>
+        </div>
+        <div class="event-members-icon" ng-click="showEventMembers(eventData)">
+            <img ng-src="{{applicationContext + '/resources/images/assets/members.png'}}">
+        </div>
+    </div>
+
+    <div class="event-actions">
+        <img class="event-ok" ng-src="{{applicationContext + '/resources/images/assets/check-mark.png'}}" ng-show="isOwnEvent" ng-click="updateEvent()">
+        <img class="event-remove" ng-src="{{applicationContext + '/resources/images/assets/cancel.png'}}" ng-click="removeEvent()">
+    </div>
+</div>

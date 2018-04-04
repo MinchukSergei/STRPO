@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <include file="12-12-2016--01-initial-schema-import.xml" relativeToChangelogFile="true"/>
+    <include file="14-12-2016--01-alter-table-user_message-message_list.xml" relativeToChangelogFile="true"/>
+    <include file="16-12-2016--01-alter-table-event_member_list.xml" relativeToChangelogFile="true"/>
+    <include file="27-04-2017-alter-table-user-event.xml" relativeToChangelogFile="true"/>
+    <include file="01-05-2017---01-add-tables-for-nn.xml" relativeToChangelogFile="true"/>
+</databaseChangeLog>

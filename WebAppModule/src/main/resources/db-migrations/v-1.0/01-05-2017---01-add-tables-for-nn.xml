@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <preConditions>
+        <dbms type="mysql"/>
+    </preConditions>
+
+    <changeSet id="create-table-initial_weights" author="sergeyminchuk@outlook.com">
+        <createTable tableName="nn_initial_weights">
+            <column name="pk_id" autoIncrement="true" type="BIGINT">
+                <constraints nullable="false"
+                             primaryKey="true"/>
+            </column>
+
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="initial_weights" type="BLOB">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <modifySql dbms="mysql">
+            <append value="ENGINE=InnoDB DEFAULT CHARSET=utf8"/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="add-constraints-to-nn_initial_weights" author="sergeyminchuk@outlook.com">
+        <addForeignKeyConstraint baseTableName="nn_initial_weights"
+                                 baseColumnNames="user_id"
+                                 constraintName="nn_initial_weights_user_data_pk_id_fk"
+                                 referencedTableName="user_data"
+                                 referencedColumnNames="pk_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="create-table-learning_set" author="sergeyminchuk@outlook.com">
+        <createTable tableName="learning_set">
+            <column name="pk_id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false"
+                             primaryKey="true"/>
+            </column>
+
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="fk_event_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="event_weekday" type="TINYINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="event_time" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="fk_event_type" type="TINYINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="fk_user_owner" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="fk_user_participant" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="accepted" type="TINYINT(1)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <modifySql dbms="mysql">
+            <append value="ENGINE=InnoDB DEFAULT CHARSET=utf8"/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="add-constraints-to-learning_set" author="sergeyminchuk@outlook.com">
+        <addForeignKeyConstraint baseTableName="learning_set"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_learning_set_user_id"
+                                 referencedTableName="user_event"
+                                 referencedColumnNames="pk_id"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"/>
+
+        <addForeignKeyConstraint baseTableName="learning_set"
+                                 baseColumnNames="fk_event_id"
+                                 constraintName="fk_learning_set_event_id"
+                                 referencedTableName="user_event"
+                                 referencedColumnNames="pk_id"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"/>
+
+        <addForeignKeyConstraint baseTableName="learning_set"
+                                 baseColumnNames="fk_event_type"
+                                 constraintName="fk_learning_set_event_type"
+                                 referencedTableName="event_type"
+                                 referencedColumnNames="pk_id"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"/>
+
+        <addForeignKeyConstraint baseTableName="learning_set"
+                                 baseColumnNames="fk_user_owner"
+                                 constraintName="fk_learning_set_user_owner"
+                                 referencedTableName="user_data"
+                                 referencedColumnNames="pk_id"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"/>
+
+        <addForeignKeyConstraint baseTableName="learning_set"
+                                 baseColumnNames="fk_user_participant"
+                                 constraintName="fk_learning_set_user_participant"
+                                 referencedTableName="user_data"
+                                 referencedColumnNames="pk_id"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"/>
+        
+        <addUniqueConstraint tableName="learning_set" columnNames="user_id, fk_event_id, fk_user_participant"/>
+    </changeSet>
+
+    <changeSet id="add-unique-constraint-to-nn_initial_weights" author="sergeyminchuk@outlook.com">
+        <addUniqueConstraint tableName="nn_initial_weights"
+                             columnNames="user_id"
+                             constraintName="unique_user_id"/>
+    </changeSet>
+</databaseChangeLog>

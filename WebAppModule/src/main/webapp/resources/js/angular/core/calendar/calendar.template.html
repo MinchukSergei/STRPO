@@ -1,0 +1,28 @@
+<div class="calendar-wrap">
+    <div class="calendar">
+        <div class="cal-header">
+            <div class="left" ng-click="prevMonth()"></div>
+            <h1>{{monthTitle + ' ' + yearTitle}}</h1>
+            <div class="right" ng-click="nextMonth()"></div>
+        </div>
+        <div class="month" ng-class="monthDynamicClass">
+            <div class="week" ng-repeat="week in weeks">
+                <div class="day" ng-class="{'today': isToday(day), 'other': !isCurrentMonth(day),
+                'selected': $parent.$index === selectedWeekIndex && $index === selectedDayIndex }"
+                     ng-repeat="day in week" ng-click="setSelected($parent.$index, $index, day)">
+                    <div class="day-name">{{getWeekDayName(day.getDay())}}</div>
+                    <div class="day-number">{{day.getDate()}}</div>
+                    <div class="day-events">
+                        <div class="event-line own">
+                            <div class="ev yellow" ng-repeat="i in rangeNumber(day.own) track by $index"></div>
+                        </div>
+                        <div class="event-line shared">
+                            <div class="ev orange" ng-repeat="i in rangeNumber(day.shared) track by $index"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

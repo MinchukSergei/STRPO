@@ -1,0 +1,8 @@
+<div class="field-wrap">
+    <label ng-class="{'input-label': true, 'active': $ctrl.isActive} ">
+        {{$ctrl.val}}<span class="req" ng-show="$ctrl.req">*</span>
+    </label>
+    <input ng-class="{'required' : $ctrl.isEmpty}" name="{{$ctrl.name}}" ng-model="$ctrl.model"
+           type="{{$ctrl.type}}" autocomplete="new-password" ng-change="$ctrl.setActive()" ng-required="{{$ctrl.req}}"
+           ng-blur="$ctrl.checkValid()"/>
+</div>

@@ -1,0 +1,29 @@
+
+.events-tab {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.actual-events-input {
+    display: none;
+}
+
+.actual-events {
+    display: flex;
+    justify-content: flex-end;
+    margin: 5px;
+}
+
+.actual-events-label {
+    color: rgba(0,0,0,0.7);
+    display: flex;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.actual-events-label img {
+    width: 20px;
+    height: 20px;
+    margin-right: 3px;
+}

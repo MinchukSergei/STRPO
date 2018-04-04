@@ -1,0 +1,225 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-width: 768px;
+    height:800px;
+    font-family: 'Titillium Web', sans-serif;
+    background: url("../images/registration-background.jpg");
+    background-size: cover;
+}
+
+.auth-form {
+    width: 600px;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30px;
+    background: #2D2D2C;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px 4px rgba(0, 0, 0, 0.5);
+}
+
+.tab-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 50px;
+    margin-top: 10px;
+}
+
+.tab-name {
+    align-self: center;
+}
+
+.tab.active {
+    background: #E6C500;
+    color: #F4F4F4;
+}
+
+.tab {
+    cursor: pointer;
+    background: #828282;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+    transition: .5s ease;
+    color: #BEBEBE;
+}
+
+.tab:hover {
+    background: #999930;
+    transition: .5s ease;
+    color: #F4F4F4;
+    font-weight: normal;
+}
+
+.tab-main-name {
+    font-size: 35px;
+    color: #F4F4F4;
+    align-self: center;
+    margin: 20px 0 20px 0;
+}
+
+.tab-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.input-label {
+    position: absolute;
+    transform: translateY(6px);
+    left: 13px;
+    color: #BEBEBE;
+    transition: all 0.25s ease;
+    -webkit-backface-visibility: hidden;
+    pointer-events: none;
+    font-size: 22px;
+}
+
+.input-label .req {
+    margin: 2px;
+    color: #E6C500;
+}
+
+.input-label.active {
+    transform: translateY(35px);
+    left: 2px;
+    font-size: 14px;
+}
+
+.input-label.active .req {
+    opacity: 0;
+}
+
+.required {
+    border:1px solid red;
+}
+
+.alert-error {
+    color: #a94442;
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
+}
+
+.alert-success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border: 1px solid #d6e9c6;
+    padding: 10px;
+}
+
+.auth-alert {
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+}
+
+.auth-result-modal {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.auth-result-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 100px auto auto;
+    width: 300px;
+    height: 50px;
+}
+
+.field-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.field-wrap {
+    position:relative;
+    margin-bottom:25px;
+}
+
+input {
+    width: 100%;
+    height: 35px;
+    background: #2D2D2C;
+    border-radius:0;
+    border:1px solid #BEBEBE;
+    transition:border-color .25s ease, box-shadow .25s ease;
+    font-size: 20px;
+    color: #F4F4F4;
+    padding-left: 10px;
+}
+
+input:focus {
+    outline:0;
+    border-color: #E6C500;
+}
+
+
+.button-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.button-big {
+    width: 200px;
+    height: 40px;
+    border: none;
+    background: #E6C500;
+    color: #F4F4F4;
+    cursor: pointer;
+    transition: .5s ease;
+    outline: none;
+}
+
+.button-big:disabled {
+     background: #A9A999;
+}
+.button-big:disabled:hover {
+    background: #A9A999;
+}
+
+.button-big:hover {
+    background: #999930;
+    transition: .5s ease;
+    outline: none;
+}
+
+.button-little {
+    width: 200px;
+    height: 25px;
+    border: none;
+    background: #BEBEBE;
+    color: #F4F4F4;
+    cursor: pointer;
+    transition: .5s ease;
+    margin-top: -15px;
+    margin-bottom: 10px;
+    outline: none;
+}
+
+.button-little:focus {
+    outline: none;
+}
+
+
+.button-little:hover {
+    background: #828282;
+    transition: .5s ease;
+    outline: none;
+}
+

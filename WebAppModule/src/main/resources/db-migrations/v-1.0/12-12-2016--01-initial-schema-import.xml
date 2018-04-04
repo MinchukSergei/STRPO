@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <preConditions>
+        <dbms type="mysql"/>
+    </preConditions>
+
+    <changeSet id="create-table-user_message" author="sergeyminchuk@outlook.com">
+        <createTable tableName="user_message">
+            <column name="pk_id" autoIncrement="true" type="BIGINT">
+                <constraints nullable="false"
+                             primaryKey="true"/>
+            </column>
+
+            <column name="message_text" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="message_timestamp" type="TIMESTAMP"
+                    defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <modifySql dbms="mysql">
+            <append value="ENGINE=InnoDB DEFAULT CHARSET=utf8"/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="create-table-user_image" author="sergeyminchuk@outlook.com">
+        <createTable tableName="user_image">
+            <column name="pk_id"
+                    type="BIGINT"
+                    autoIncrement="true">
+                <constraints nullable="false"
+                             primaryKey="true"/>
+            </column>
+            <column name="image_blob"
+                    type="MEDIUMBLOB">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image_name"
+                    type="varchar(32)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <modifySql dbms="mysql">
+            <append value="ENGINE=InnoDB DEFAULT CHARSET=utf8"/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="add-constraints-to-user_image" author="sergeyminchuk@outlook.com">
+        <addUniqueConstraint tableName="user_image" columnNames="image_name" constraintName="image_name_UNIQUE"/>
+    </changeSet>
+
+    <changeSet id="create-table-user_data" author="sergeyminchuk@outlook.com">
+        <createTable tableName="user_data">
+            <column name="pk_id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false"
+                             primaryKey="true"/>
+            </column>
+
+            <column name="user_login" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="user_password" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="user_firstname" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="user_lastname" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="user_email" type="varchar(20)" defaultValue="NULL"/>
+
+            <column name="user_phone" type="varchar(20)" defaultValue="NULL"/>
+
+            <column name="user_address" type="varchar(45)" defaultValue="NULL"/>
+
+            <column name="fk_user_icon" type="BIGINT" defaultValue="NULL"/>
+
+        </createTable>
+
+        <modifySql dbms="mysql">
+            <append value="ENGINE=InnoDB DEFAULT CHARSET=utf8"/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="add-constraints-to-user_data" author="sergeyminchuk@outlook.com">
+        <addUniqueConstraint tableName="user_data" columnNames="user_login" constraintName="user_login_UNIQUE"/>
+
+        <createIndex tableName="user_data" indexName="fk_user_icon_idx">
+            <column name="fk_user_icon"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseTableName="user_data"
+                                 baseColumnNames="fk_user_icon"
+                                 constraintName="fk_user_icon"
+                                 referencedTableName="user_image"
+                                 referencedColumnNames="pk_id"
+                                 onDelete="SET NULL"
+                                 onUpdate="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="create-table-event_type" author="sergeyminchuk@outlook.com">
+        <createTable tableName="event_type">
+            <column name="pk_id" type="TINYINT">
+                <constraints nullable="false"
+                             primaryKey="true"/>
+            </column>
+
+            <column name="type_name" type="varchar(15)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <modifySql dbms="mysql">
+            <append value="ENGINE=InnoDB DEFAULT CHARSET=utf8"/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="add-constraints-to-event_type" author="sergeyminchuk@outlook.com">
+        <addUniqueConstraint tableName="event_type" columnNames="type_name" constraintName="type_name_UNIQUE"/>
+    </changeSet>
+
+    <changeSet id="create-table-user_event" author="sergeyminchuk@outlook.com">
+        <createTable tableName="user_event">
+            <column name="pk_id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false"
+                             primaryKey="true"/>
+            </column>
+
+            <column name="event_timestamp" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="event_name" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="fk_event_type" type="TINYINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="fk_user_owner" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <modifySql dbms="mysql">
+            <append value="ENGINE=InnoDB DEFAULT CHARSET=utf8"/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="add-constraints-to-user_event" author="sergeyminchuk@outlook.com">
+
+        <createIndex tableName="user_event" indexName="fk_user_event_event_type_idx">
+            <column name="fk_event_type"/>
+        </createIndex>
+
+        <createIndex tableName="user_event" indexName="fk_owner_user_data_idx">
+            <column name="fk_user_owner"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseTableName="user_event"
+                                 baseColumnNames="fk_user_owner"
+                                 constraintName="fk_owner_user_data"
+                                 referencedTableName="user_data"
+                                 referencedColumnNames="pk_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="user_event"
+                                 baseColumnNames="fk_event_type"
+                                 constraintName="fk_user_event_event_type"
+                                 referencedTableName="event_type"
+                                 referencedColumnNames="pk_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="create-table-message_list" author="sergeyminchuk@outlook.com">
+        <createTable tableName="message_list">
+            <column name="pk_id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false"
+                             primaryKey="true"/>
+            </column>
+
+            <column name="fk_message_sender" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="fk_message_receiver" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="fk_message" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <modifySql dbms="mysql">
+            <append value="ENGINE=InnoDB DEFAULT CHARSET=utf8"/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="add-constraints-to-message_list" author="sergeyminchuk@outlook.com">
+        <createIndex tableName="message_list" indexName="fk_message_sender_user_data_idx">
+            <column name="fk_message_sender"/>
+        </createIndex>
+
+        <createIndex tableName="message_list" indexName="fk_message_receiver_user_data_idx">
+            <column name="fk_message_receiver"/>
+        </createIndex>
+
+        <createIndex tableName="message_list" indexName="fk_message_user_message_idx">
+            <column name="fk_message"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseTableName="message_list"
+                                 baseColumnNames="fk_message_receiver"
+                                 constraintName="fk_message_receiver_user_data"
+                                 referencedTableName="user_data"
+                                 referencedColumnNames="pk_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="message_list"
+                                 baseColumnNames="fk_message_sender"
+                                 constraintName="fk_message_sender_user_data"
+                                 referencedTableName="user_data"
+                                 referencedColumnNames="pk_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="message_list"
+                                 baseColumnNames="fk_message"
+                                 constraintName="fk_message_user_message"
+                                 referencedTableName="user_message"
+                                 referencedColumnNames="pk_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+
+    </changeSet>
+
+    <changeSet id="create-table-image_list" author="sergeyminchuk@outlook.com">
+        <createTable tableName="image_list">
+            <column name="pk_id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false"
+                             primaryKey="true"/>
+            </column>
+
+            <column name="fk_image" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="fk_user" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <modifySql dbms="mysql">
+            <append value="ENGINE=InnoDB DEFAULT CHARSET=utf8"/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="add-constraints-to-image_list" author="sergeyminchuk@outlook.com">
+        <createIndex tableName="image_list" indexName="fk_image_user_image_idx">
+            <column name="fk_image"/>
+        </createIndex>
+
+        <createIndex tableName="image_list" indexName="fk_user_user_data_idx">
+            <column name="fk_user"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseTableName="image_list"
+                                 baseColumnNames="fk_image"
+                                 constraintName="fk_image_user_image"
+                                 referencedTableName="user_image"
+                                 referencedColumnNames="pk_id"
+                                 onUpdate="CASCADE"
+                                 onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="image_list"
+                                 baseColumnNames="fk_user"
+                                 constraintName="fk_user_user_data"
+                                 referencedTableName="user_data"
+                                 referencedColumnNames="pk_id"
+                                 onUpdate="CASCADE"
+                                 onDelete="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="create-table-friend_list" author="sergeyminchuk@outlook.com">
+        <createTable tableName="friend_list">
+            <column name="pk_id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false"
+                             primaryKey="true"/>
+            </column>
+
+            <column name="fk_owner_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="fk_friend_id" type="BIGINT" defaultValue="NULL"/>
+        </createTable>
+
+        <modifySql dbms="mysql">
+            <append value="ENGINE=InnoDB DEFAULT CHARSET=utf8"/>
+        </modifySql>
+    </changeSet>
+    
+    <changeSet id="add-constraints-to-friend_list" author="sergeyminchuk@outlook.com">
+        <addUniqueConstraint tableName="friend_list"
+                             columnNames="fk_owner_id, fk_friend_id"
+                             constraintName="friend_list_fk_owner_id_fk_friend_id_uindex"/>
+        
+        <createIndex tableName="friend_list" indexName="table_name_user_data_friend_fk">
+            <column name="fk_friend_id"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseTableName="friend_list"
+                                 baseColumnNames="fk_friend_id"
+                                 constraintName="table_name_user_data_friend_fk"
+                                 referencedTableName="user_data"
+                                 referencedColumnNames="pk_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="friend_list"
+                                 baseColumnNames="fk_owner_id"
+                                 constraintName="table_name_user_data_owner_fk"
+                                 referencedTableName="user_data"
+                                 referencedColumnNames="pk_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+    </changeSet>
+
+    
+    <changeSet id="create-table-event_member_list" author="sergeyminchuk@outlook.com">
+        <createTable tableName="event_member_list">
+            <column name="pk_id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false"
+                             primaryKey="true"/>
+            </column>
+            
+            <column name="fk_member" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column name="fk_event" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <modifySql dbms="mysql">
+            <append value="ENGINE=InnoDB DEFAULT CHARSET=utf8"/>
+        </modifySql>
+    </changeSet>
+    
+    <changeSet id="add-constraints-to-event_member_list" author="sergeyminchuk@outlook.com">
+        <createIndex tableName="event_member_list" indexName="fk_member_user_data_idx">
+            <column name="fk_member"/>
+        </createIndex>
+        
+        <createIndex tableName="event_member_list" indexName="fk_event_event_user_idx">
+            <column name="fk_event"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseTableName="event_member_list"
+                                 baseColumnNames="fk_event"
+                                 constraintName="fk_event_event_user"
+                                 referencedTableName="user_event"
+                                 referencedColumnNames="pk_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="event_member_list"
+                                 baseColumnNames="fk_member"
+                                 constraintName="fk_member_user_data"
+                                 referencedTableName="user_data"
+                                 referencedColumnNames="pk_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+    </changeSet>
+</databaseChangeLog>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
